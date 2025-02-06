@@ -55,21 +55,21 @@ if canvas_result.image_data is not None:
         img.save(image_filename)
         st.info(f"L'image a été sauvegardée sous `{image_filename}`.")
         response = requests.post(
-            "http://localhost:8000/predict",
+            "http://localhost:8080/models/predict",
             files={"file": buffer}
         )
         if response.status_code == 200:
             result = response.json()
-            label = result.get("label", "N/A")
+            #label = result.get("label", "N/A")
             
             # Afficher le résultat à l'utilisateur
-            st.success(f"Résultat : {label}")
+            st.success(f"Résultat : {result}")
 
             # Enregistrer les résultats dans un fichier CSV
             timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
             data = {
                 "timestamp": [timestamp],
-                "label": [label],
+#                "label": [label],
                 "image_path": [image_filename]
             }
 

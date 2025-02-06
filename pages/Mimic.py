@@ -35,7 +35,7 @@ if camera_image:
 
         # Envoi au backend (remplacez l'URL par celle de votre backend)
         response = requests.post(
-            "http://localhost:8000/predict",
+            "http://localhost:8080/models/predict",
             files={"file": buffer}
         )
         
