@@ -26,6 +26,7 @@ canvas_result = st_canvas(
     fill_color="rgba(255, 165, 0, 0.3)",  # Couleur de remplissage par défaut
     stroke_width=stroke_width,
     stroke_color=stroke_color,
+    background_color="#FFF",  # Couleur de fond
     update_streamlit=realtime_update,
     height=400,
     width=600,
