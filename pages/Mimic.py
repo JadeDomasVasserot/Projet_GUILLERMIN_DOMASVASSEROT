@@ -45,7 +45,6 @@ if camera_image:
 
             if response.status_code == 200:
                 result = response.json()
-                label = result.get("label", "N/A")
 
                 # Afficher le résultat
                 st.success(f"Résultat : {label}")
@@ -54,7 +53,6 @@ if camera_image:
                 csv_file = "predictions.csv"
                 data = {
                     "timestamp": [datetime.now().strftime("%Y-%m-%d %H:%M:%S")],
-                    "label": [label],
                     "image_path": [image_filename]
                 }
 
