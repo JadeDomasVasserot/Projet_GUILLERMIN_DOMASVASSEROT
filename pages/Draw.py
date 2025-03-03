@@ -55,7 +55,7 @@ if canvas_result.image_data is not None:
         img.save(image_filename)
         st.info(f"L'image a été sauvegardée sous `{image_filename}`.")
         response = requests.post(
-            "http://localhost:8080/models/predict",
+            "https://api-cloud-g4-0bc391d2f0c3.herokuapp.com/models/predict",
             files={"file": buffer}
         )
         if response.status_code == 200:

@@ -35,7 +35,7 @@ if camera_image:
 
         # Envoi au backend (remplacez l'URL par celle de votre backend)
         response = requests.post(
-            "http://localhost:8080/models/predict",
+            "https://api-cloud-g4-0bc391d2f0c3.herokuapp.com/models/predict",
             files={"file": buffer}
         )
         
