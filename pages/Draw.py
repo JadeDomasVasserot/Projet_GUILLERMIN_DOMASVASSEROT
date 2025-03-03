@@ -18,15 +18,15 @@ st.header("Paramètres du Canvas")
 
 drawing_mode = st.radio("Mode de dessin :", ("freedraw", "line", "rect", "circle", "transform"))
 stroke_width = st.slider("Épaisseur du trait :", 1, 25, 3)
-stroke_color = st.color_picker("Couleur du trait :", "#000000")
+stroke_color = st.color_picker("Couleur du trait :", "#FFFFFF")
 realtime_update = st.checkbox("Mise à jour en temps réel ?", True)
 
 # Création du canvas pour dessiner
 canvas_result = st_canvas(
-    fill_color="rgba(255, 165, 0, 0.3)",  # Couleur de remplissage par défaut
+    fill_color="#000000",  # Couleur de remplissage par défaut
     stroke_width=stroke_width,
     stroke_color=stroke_color,
-    background_color="#FFF",  # Couleur de fond
+    background_color="#000000",  # Couleur de fond
     update_streamlit=realtime_update,
     height=400,
     width=600,
