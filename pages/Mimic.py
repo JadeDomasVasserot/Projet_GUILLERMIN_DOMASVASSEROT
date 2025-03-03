@@ -47,7 +47,7 @@ if camera_image:
                 result = response.json()
 
                 # Afficher le résultat
-                st.success(f"Résultat : {label}")
+                st.success(f"Résultat : {result}")
 
                 # Sauvegarder les résultats dans un fichier CSV
                 csv_file = "predictions.csv"
