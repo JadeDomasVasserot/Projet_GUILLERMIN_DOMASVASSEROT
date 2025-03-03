@@ -60,7 +60,7 @@ if canvas_result.image_data is not None:
 
         # Envoi au backend
         url = "https://api-cloud-g4-0bc391d2f0c3.herokuapp.com/models/predict"
-        files = {"file": buffer}  # Assure-toi que l'API attend "file" et pas "data"
+        files = {"data": buffer}  # Assure-toi que l'API attend "file" et pas "data"
 
         try:
             response = requests.post(url, files=files)
