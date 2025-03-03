@@ -46,15 +46,14 @@ if camera_image:
             if response.status_code == 200:
                 result = response.json()
 
-                # Afficher le résultat
-                st.success(f"Résultat : {result}")
-
                 # Sauvegarder les résultats dans un fichier CSV
                 csv_file = "predictions.csv"
                 data = {
                     "timestamp": [datetime.now().strftime("%Y-%m-%d %H:%M:%S")],
                     "image_path": [image_filename]
                 }
+                                # Afficher le résultat
+                st.success(f"Résultat : {result}")
 
                 try:
                     df = pd.read_csv(csv_file)
