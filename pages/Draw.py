@@ -28,8 +28,8 @@ canvas_result = st_canvas(
     stroke_color=stroke_color,
     background_color="#000000",  # Couleur de fond
     update_streamlit=realtime_update,
-    height=400,
-    width=600,
+    height=500,
+    width=500,
     drawing_mode=drawing_mode,
     key="canvas",
 )
