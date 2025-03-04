@@ -1,4 +1,20 @@
-timestamp,label,image_path
-2025-02-06 17:38:25,,./images/upload/image_20250206_173823.png
-2025-02-06 17:38:41,,./images/upload/image_20250206_173839.png
-2025-02-06 17:38:54,,./images/upload/image_20250206_173852.png
+timestamp,label,image_path,confidence
+2025-03-04 10:53:44,rabbit,./images/draw/image_20250304_105344.png,1.0
+2025-03-04 10:54:11,rabbit,./images/draw/image_20250304_105411.png,1.0
+2025-03-04 10:54:20,eye,./images/draw/image_20250304_105420.png,1.0
+2025-03-04 10:54:27,eye,./images/draw/image_20250304_105427.png,0.9864
+2025-03-04 10:54:35,hand,./images/draw/image_20250304_105435.png,1.0
+2025-03-04 10:54:48,hand,./images/draw/image_20250304_105448.png,0.9455
+2025-03-04 10:55:00,binoculars,./images/draw/image_20250304_105500.png,0.9988
+2025-03-04 10:55:14,binoculars,./images/draw/image_20250304_105514.png,1.0
+2025-03-04 10:55:22,basket,./images/draw/image_20250304_105522.png,1.0
+2025-03-04 10:55:30,basket,./images/draw/image_20250304_105530.png,0.996
+2025-03-04 10:56:23,hand,./images/upload/image_20250304_105623.png,0.3424
+2025-03-04 10:56:49,basket,./images/upload/image_20250304_105649.png,1.0
+2025-03-04 10:57:09,binoculars,./images/upload/image_20250304_105709.png,0.3129
+2025-03-04 10:57:32,basket,./images/upload/image_20250304_105732.png,0.5098
+2025-03-04 10:58:38,rabbit,./images/draw/image_20250304_105838.png,0.9999
+2025-03-04 11:16:42,rabbit,./images/draw/image_20250304_111642.png,0.9999
+2025-03-04 11:16:56,eye,./images/draw/image_20250304_111656.png,0.9976
+2025-03-04 11:17:05,basket,./images/draw/image_20250304_111705.png,0.9995
+2025-03-04 11:17:13,hand,./images/draw/image_20250304_111713.png,1.0

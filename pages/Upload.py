@@ -1,77 +1,41 @@
 import streamlit as st
 from PIL import Image
-import pandas as pd
-import requests
-from datetime import datetime
-import os
+from services.predictService import predictService
+from utils.utils import UPLOAD_FOLDER, save, setup_folders, setup_style, to_card
 import io
 
-# Créer un dossier pour stocker les images si nécessaire
-image_folder = "./images/upload"
-if not os.path.exists(image_folder):
-    os.makedirs(image_folder)
+setup_folders()
+setup_style()
 
-st.title("Application de prédiction d'images")
+st.title("Prediction par Upload de fichier")
 
-# Upload d'image
-uploaded_file = st.file_uploader("Téléchargez une image", type=["png", "jpg", "jpeg"])
+col1, col2 = st.columns(2)
+uploaded_file = col1.file_uploader("Téléchargez une image", type=["png", "jpg", "jpeg"])
 
-# Vérifier si un fichier a été uploadé
+predicted = None
 if uploaded_file is not None:
-    st.subheader("Aperçu de l'image :")
-    
-    # Charger l'image avec PIL
     img = Image.open(uploaded_file)
-    st.image(img, caption="Image téléversée")
+       
+    col2.subheader("Aperçu de l'image :")
+    col2.image(img, caption="Image téléversée")
 
-    # Bouton pour envoyer l'image au backend
-    if st.button("Prédire"):
-        # Générer un nom unique pour l'image (timestamp)
-        timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
-        image_filename = f"{image_folder}/image_{timestamp}.png"
+    buffer = io.BytesIO()
+    img.save(buffer, format="PNG")
+    buffer.seek(0)
+    predicted = predictService.predict(buffer)
 
-        # Sauvegarder l'image localement
-        img.save(image_filename)
-        st.info(f"L'image a été sauvegardée sous `{image_filename}`.")
+if predicted is None:
+    predicted = [
+    {"label": "basket", "id": 0, "confidence": 0},
+    {"label": "eye", "id": 1, "confidence": 0},
+    {"label": "binoculars", "id": 2, "confidence": 0},
+    {"label": "rabbit", "id": 3, "confidence": 0},
+    {"label": "hand", "id": 4, "confidence": 0}
+]
+for item in predicted:
+    st.markdown(to_card(item), unsafe_allow_html=True)
 
-        # Convertir l'image en bytes pour l'envoi
-        buffer = io.BytesIO()
-        img.save(buffer, format="PNG")
-        buffer.seek(0)
-
-        # Envoi au backend
-        url = "https://api-cloud-g4-0bc391d2f0c3.herokuapp.com/models/predict"
-        files = {"data": buffer}  # Assure-toi que ton API attend "file" et pas "data"
-
-        try:
-            response = requests.post(url, files=files)
-            response.raise_for_status()  # Lève une erreur HTTP si problème
-
-            if response.status_code == 200:
-                result = response.json()
-                st.success("Prédiction réussie !")
-                st.json(result)  # Affichage correct du JSON
-
-                # Enregistrer les résultats dans un fichier CSV
-                csv_file = "predictions.csv"
-                data = {
-                    "timestamp": [datetime.now().strftime("%Y-%m-%d %H:%M:%S")],
-                    "image_path": [image_filename]
-                }
-
-                try:
-                    df = pd.read_csv(csv_file)
-                    df_new = pd.DataFrame(data)
-                    df = pd.concat([df, df_new], ignore_index=True)
-                except FileNotFoundError:
-                    df = pd.DataFrame(data)
-
-                df.to_csv(csv_file, index=False)
-                st.info(f"Prédiction enregistrée dans `{csv_file}`.")
-
-            else:
-                st.error(f"Erreur HTTP {response.status_code}")
-                st.error(response.text)  # Affiche l'erreur exacte
-
-        except requests.exceptions.RequestException as e:
-            st.error(f"Erreur de connexion : {e}")
+if uploaded_file is not None:
+    if st.button("Sauvegarder l'image"):
+        best = max(predicted, key=lambda x: x["confidence"])
+        save(UPLOAD_FOLDER, img, best["label"], best["confidence"])
