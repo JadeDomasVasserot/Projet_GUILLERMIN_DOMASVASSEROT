@@ -3,3 +3,4 @@ seaborn
 streamlit
 watchdog
 streamlit-drawable-canvas
+azure-storage-blob

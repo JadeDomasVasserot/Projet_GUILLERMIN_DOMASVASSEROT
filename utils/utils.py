@@ -2,6 +2,11 @@ from datetime import datetime
 import os
 import pandas as pd
 import streamlit as st
+from azure.storage.blob import BlobServiceClient
+
+AZURE_CONNECTION_URL = "DefaultEndpointsProtocol=https;AccountName=jdvpgniacloudproject;AccountKey=2edSn5N29xK38a8tXgp+XKoQw3/KqfPVe1hL5jCHHWTRpa4a2RBaRAvLoQc1wMltLtwfh6MJUlrS+AStH7RzkQ==;EndpointSuffix=core.windows.net"
+BLOB_SERVICE_CLIENT = BlobServiceClient.from_connection_string(AZURE_CONNECTION_URL)
+CONTAINER_BLOB_NAME = "quickdrawjdvpgn"
 
 DRAW_FOLDER = "./images/draw"
 MIMIC_FOLDER = "./images/mimic"
@@ -55,7 +60,8 @@ def to_card(predicted):
     """
 
 def save(folder, img, label, confidence):
-    image_filename = f"{folder}/image_{datetime.now().strftime("%Y%m%d_%H%M%S")}.png"
+    file_name = f"image_{datetime.now().strftime("%Y%m%d_%H%M%S")}.png"
+    image_filename = f"{folder}/{file_name}"
     img.save(image_filename)
     
     csv_file = "predictions.csv"
@@ -67,4 +73,8 @@ def save(folder, img, label, confidence):
     except FileNotFoundError:
         df = pd.DataFrame(data)
     df.to_csv(csv_file, index=False)
-    st.info(f"Image et données enregistrées.")
+    
+    blob_client = BLOB_SERVICE_CLIENT.get_blob_client(container=CONTAINER_BLOB_NAME, blob=file_name)
+    with open(image_filename, "rb") as data:
+        blob_client.upload_blob(data, overwrite=True)
+    st.info(f"Image et données enregistrées dans Azure.")
